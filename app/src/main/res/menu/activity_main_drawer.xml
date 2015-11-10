@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single" android:title="Mi libreria">
+
+        <item android:id="@+id/nav_libros"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Libros" />
+        <item android:id="@+id/nav_series"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Series" />
+        <item android:id="@+id/nav_peliculas"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Peliculas" />
+
+    </group>
+
+    <item android:title="Zona Usuario">
+        <menu>
+            <item android:id="@+id/nav_opciones"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="Opciones" />
+            <item android:id="@+id/nav_login"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="Login" />
+        </menu>
+    </item>
+
+</menu>
