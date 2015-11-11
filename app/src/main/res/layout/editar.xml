@@ -40,7 +40,12 @@
         android:textSize="@dimen/abc_text_size_medium_material"
         android:id="@+id/txtTitulo"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:editable="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <LinearLayout
         android:orientation="horizontal"

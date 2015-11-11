@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -57,18 +58,20 @@ public class Editar extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
 
         String titulo =  intent.getStringExtra("titulo");
+        String autor =  intent.getStringExtra("autor");
         String imagen =  intent.getStringExtra("imagen");
         rutaoriginal =  intent.getStringExtra("imagen");
         String fecha =  intent.getStringExtra("fecha");
         String descripcion =  intent.getStringExtra("descripcion");
-        String autor =  intent.getStringExtra("autor");
+
 
         txtTitulo.setText(titulo);
+        txtAutor.setText(autor);
         Bitmap image = BitmapFactory.decodeFile(imagen);
         img.setImageBitmap(image);
         txtfecha.setText(fecha);
         txtDescripcion.setText(descripcion);
-        txtAutor.setText(autor);
+
 
 
         // img = (ImageView)findViewById(R.id.ImageView01);
@@ -132,10 +135,11 @@ public class Editar extends Activity implements View.OnClickListener {
 
         //registramos los edittext
         EditText txtTitulo = (EditText)findViewById(R.id.txtTitulo);
+        EditText txtAutor = (EditText)findViewById(R.id.txtAutor);
         ImageView ImageView01 = (ImageView)findViewById(R.id.ImageView01);
         EditText txtFecha = (EditText)findViewById(R.id.txtFecha);
         EditText txtDescripcion = (EditText)findViewById(R.id.txtDescripcion);
-        EditText txtAutor = (EditText)findViewById(R.id.txtAutor);
+
 
         boolean hayError = false;
 
@@ -157,6 +161,12 @@ public class Editar extends Activity implements View.OnClickListener {
             hayError = true;
         }
 
+        //si el nombre del grupo no es valido
+        if ((autor2.length() < 1 || autor2.length() > 50) && hayError == false) {
+            mostrarMensaje("El nombre del autor no es válido.");
+            hayError = true;
+        }
+
         if ((fecha2.length() < 1 || fecha2.length() > 50) && hayError == false) {
             mostrarMensaje("El nombre de la fecha no es válido.");
             hayError = true;
@@ -167,21 +177,18 @@ public class Editar extends Activity implements View.OnClickListener {
             hayError = true;
         }
 
-        //si el nombre del grupo no es valido
-        if ((autor2.length() < 1 || autor2.length() > 50) && hayError == false) {
-            mostrarMensaje("El nombre del autor no es válido.");
-            hayError = true;
-        }
+
 
         //si no hay ningun error ingresamos los nuevos datos de disco
         if (hayError == false) {
-
+            Log.d("intercambio", "devuelve editar" + titulo2 + autor2 + fecha2 + descripcion2);
             Intent i=new Intent(this,MainActivity.class);
             i.putExtra("titulo",titulo2);
+            i.putExtra("autor",autor2);
             i.putExtra("imagen", rutaimagen);
             i.putExtra("fecha",fecha2);
             i.putExtra("descripcion",descripcion2);
-            i.putExtra("autor",autor2);
+
             setResult(RESULT_OK, i);
 
         }

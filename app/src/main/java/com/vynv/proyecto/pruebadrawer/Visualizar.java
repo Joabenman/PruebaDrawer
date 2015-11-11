@@ -25,35 +25,37 @@ public class Visualizar extends Activity {
         setContentView(R.layout.visualizar);
 
         //recogemos el intent juego
-        Elemento elemento = (Elemento)getIntent().getSerializableExtra("juego");
+        Elemento elemento = (Elemento)getIntent().getSerializableExtra("vynv");
         Intent intent = getIntent();
 
         //recogemos los textview de la interfaz
         TextView lblTitulo = (TextView)findViewById(R.id.lblTitulo);
+        img = (ImageView)findViewById(R.id.imagen);
+        TextView lblAutor = (TextView)findViewById(R.id.lblAutor);
         TextView lblFecha = (TextView)findViewById(R.id.lblFecha);
         TextView lblDescripcion = (TextView)findViewById(R.id.lblDescripcion);
-        TextView lblAutor = (TextView)findViewById(R.id.lblAutor);
-        img = (ImageView)findViewById(R.id.imagen);
+
+
 
 
         String titulo =  intent.getStringExtra("titulo");
+        String autor =  intent.getStringExtra("autor");
         String imagen =  intent.getStringExtra("imagen");
         Log.d("visualizar", imagen);
         if(imagen==null) {
             imagen = defecto;
         }
-
         String fecha = intent.getStringExtra("fecha");
         String descripcion = intent.getStringExtra("descripcion");
-        String autor =  intent.getStringExtra("autor");
+
 
         //mostramos los datos recogidos
         lblTitulo.setText(titulo);
+        lblAutor.setText(autor);
         Bitmap image = BitmapFactory.decodeFile(imagen);
         img.setImageBitmap(image);
         lblFecha.setText(fecha);
         lblDescripcion.setText(descripcion);
-        lblAutor.setText(autor);
 
 
 

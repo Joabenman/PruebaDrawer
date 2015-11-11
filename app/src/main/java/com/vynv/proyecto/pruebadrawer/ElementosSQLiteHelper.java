@@ -22,7 +22,7 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
     String dbName = "BDElementos";
 
     //Sentencia SQL para crear la tabla de +"dbName+"
-    String sqlCreate = "CREATE TABLE "+dbName+" (codigo INT PRIMARY KEY, titulo varchar2(50), imagen varchar2(250), fecha  varchar2 (50), descripcion  varchar2 (50),autor varchar2 (50));";
+    String sqlCreate = "CREATE TABLE "+dbName+" (codigo INT PRIMARY KEY, titulo varchar2(50), autor varchar2 (50), imagen varchar2(250), fecha  varchar2 (50), descripcion  varchar2 (250));";
     String sqlDrop = "DROP TABLE IF EXISTS "+dbName+"";
 
     public ElementosSQLiteHelper(Context contexto, String nombre,
@@ -98,16 +98,18 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
             //db.execSQL(sqlCreate);
             int existe=0;
 
+
             for (int i = 0; i < al.size(); i++) { //recorremos todos los datos para guardarlos
                 //cogemos los datos que esten en esa posicion del listview
                 Elemento ele = al.get(i);
 
                 int iddb = i;
                 String Titulodb = ele.getTitulo();
+                String Autordb = ele.getAutor();
                 String Imagendb = ele.getRutaimagen();
                 String Fechadb = ele.getFecha();
                 String Descripciondb = ele.getDescripcion();
-                String Autordb = ele.getAutor();
+
 
                 //comprobamos si el elemento ya existe
 
@@ -127,7 +129,8 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
                 else{ //si no existe el elemento lo introducimos
                     //insertamos
                     Log.d("guardado", "guardando, no existe" + existe + Titulodb);
-                    db.execSQL("INSERT INTO "+dbName+" (codigo, titulo , imagen, fecha, descripcion, autor ) values (" + iddb + ", '" + Titulodb + "', '" + Imagendb + "', '" + Fechadb + "', '" + Descripciondb + "', '" + Autordb + "');");
+
+                    db.execSQL("INSERT INTO "+dbName+" (codigo, titulo, autor, imagen, fecha, descripcion ) values (" + iddb + ", '" + Titulodb + "', '" + Autordb + "', '" + Imagendb + "', '" + Fechadb + "', '" + Descripciondb + "');");
                 }
             }
             //cargamos los datos

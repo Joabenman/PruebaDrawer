@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -59,12 +60,6 @@ public class Insertar extends Activity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; go home
-                /*
-                Intent intent = new Intent(this, HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;*/
                 finish();
                 return true;
 
@@ -98,18 +93,20 @@ public class Insertar extends Activity implements View.OnClickListener {
 
         //registramos los edittext
         EditText txtTitulo = (EditText)findViewById(R.id.txtTitulo);
+        EditText txtAutor = (EditText)findViewById(R.id.txtAutor);
         ImageView ImageView01 = (ImageView)findViewById(R.id.ImageView01);
         EditText txtFecha = (EditText)findViewById(R.id.txtFecha);
         EditText txtDescripcion = (EditText)findViewById(R.id.txtDescripcion);
-        EditText txtAutor = (EditText)findViewById(R.id.txtAutor);
+
 
         boolean hayError = false;
 
         String titulo = txtTitulo.getText().toString(); //recogemos txttitulo
+        String autor = txtAutor.getText().toString();
         String imagen = selectedImagePath;
         String descripcion = txtDescripcion.getText().toString(); //recogemos txteditorial
         String fecha = txtFecha.getText().toString();
-        String autor = txtAutor.getText().toString();
+
 
 
 
@@ -117,6 +114,12 @@ public class Insertar extends Activity implements View.OnClickListener {
             mostrarMensaje("El nombre del disco no es válido.");
             hayError = true;
         }
+
+        if ((autor.length() < 1 || autor.length() > 50) && hayError == false) {
+            mostrarMensaje("El nombre del grupo no es válido.");
+            hayError = true;
+        }
+
         if ((fecha.length() < 1 || fecha.length() > 50) && hayError == false) {
             mostrarMensaje("El nombre de la fecha no es válido.");
             hayError = true;
@@ -128,20 +131,18 @@ public class Insertar extends Activity implements View.OnClickListener {
         }
 
 
-        if ((autor.length() < 1 || autor.length() > 50) && hayError == false) {
-            mostrarMensaje("El nombre del grupo no es válido.");
-            hayError = true;
-        }
+
 
         //si no hay ningun error ingresamos los nuevos datos de disco
         if (hayError == false) {
-
+            Log.d("intercambio", "devuelve insertar" + titulo + autor + fecha + descripcion);
             Intent i=new Intent(this,MainActivity.class);
             i.putExtra("titulo",titulo);
+            i.putExtra("autor",autor);
             i.putExtra("imagen",imagen);
             i.putExtra("fecha",fecha);
             i.putExtra("descripcion",descripcion);
-            i.putExtra("autor",autor);
+
             setResult(RESULT_OK, i);
 
         }

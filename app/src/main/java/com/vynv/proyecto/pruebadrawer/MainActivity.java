@@ -65,10 +65,11 @@ public class MainActivity extends AppCompatActivity
     EditText editsearch;
 
     String titulo="";
+    String autor="";
     String imagen="";
     String fecha="";
     String descripcion="";
-    String autor="";
+
     String nfichero="recibelibros.xml";
 
     private ListView listElemento;
@@ -243,6 +244,9 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("titulo")) {
                 titulo = data.getExtras().getString("titulo");
             }
+            if (data.hasExtra("autor")) {
+                autor = data.getExtras().getString("autor");
+            }
             if (data.hasExtra("imagen")) {
                 imagen = data.getExtras().getString("imagen");
             }
@@ -252,12 +256,10 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("descripcion")) {
                 descripcion = data.getExtras().getString("descripcion");
             }
-            if (data.hasExtra("autor")) {
-                autor = data.getExtras().getString("autor");
-            }
+
 
             Log.d("tag", titulo);
-            datosElementos.add(new Elemento(titulo, imagen, fecha, descripcion, autor));
+            datosElementos.add(new Elemento(titulo, autor, imagen, fecha, descripcion));
             guardarElementosSincronizado();
             adaptador.notifyDataSetChanged();
 
@@ -266,6 +268,9 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("titulo")) {
                 titulo = data.getExtras().getString("titulo");
             }
+            if (data.hasExtra("autor")) {
+                autor = data.getExtras().getString("autor");
+            }
             if (data.hasExtra("imagen")) {
                 imagen = data.getExtras().getString("imagen");
             }
@@ -275,13 +280,11 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("descripcion")) {
                 descripcion = data.getExtras().getString("descripcion");
             }
-            if (data.hasExtra("autor")) {
-                autor = data.getExtras().getString("autor");
-            }
 
-            datosElementos.set(selectedItem, new Elemento(titulo, imagen, fecha, descripcion, autor));
-            guardarElementosSincronizado();
+            datosElementos.set(selectedItem, new Elemento(titulo, autor, imagen, fecha, descripcion));
+
             adaptador.notifyDataSetChanged();
+            guardarElementosSincronizado();
         }
     }
 
@@ -356,35 +359,40 @@ public class MainActivity extends AppCompatActivity
 
                 Intent intentVisualiza = new Intent(this, Visualizar.class);
                 titulo =(datosElementos.get(info.position).getTitulo());
+                autor =(datosElementos.get(info.position).getAutor());
                 imagen =(datosElementos.get(info.position).getRutaimagen());
                 fecha =(datosElementos.get(info.position).getFecha());
                 descripcion =(datosElementos.get(info.position).getDescripcion());
-                autor =(datosElementos.get(info.position).getAutor());
+
 
                 intentVisualiza.putExtra("titulo",titulo);
+                intentVisualiza.putExtra("autor", autor);
                 intentVisualiza.putExtra("imagen", imagen);
                 intentVisualiza.putExtra("fecha",fecha);
                 intentVisualiza.putExtra("descripcion",descripcion);
-                intentVisualiza.putExtra("autor", autor);
-                startActivity(intentVisualiza);
 
+                startActivity(intentVisualiza);
+                Log.d("intercambio", "pilla insertar" + titulo + autor + fecha + descripcion);
                 break;
 
             case R.id.mnuEditar:
 
                 Intent intentEdita = new Intent(this, Editar.class);
                 titulo =(datosElementos.get(info.position).getTitulo());
+                autor =(datosElementos.get(info.position).getAutor());
                 imagen =(datosElementos.get(info.position).getRutaimagen());
                 fecha =(datosElementos.get(info.position).getFecha());
                 descripcion =(datosElementos.get(info.position).getDescripcion());
-                autor =(datosElementos.get(info.position).getAutor());
+
 
                 Log.d("titulo", titulo);
                 intentEdita.putExtra("titulo", titulo);
+                intentEdita.putExtra("autor", autor);
                 intentEdita.putExtra("imagen", imagen);
                 intentEdita.putExtra("fecha", fecha);
                 intentEdita.putExtra("descripcion", descripcion);
-                intentEdita.putExtra("autor", autor);
+
+                Log.d("intercambio", "pilla editar" + titulo + autor + fecha + descripcion);
                 startActivityForResult(intentEdita, 3);
                 break;
 
@@ -395,8 +403,8 @@ public class MainActivity extends AppCompatActivity
 
                 //lo borramos del listview y lo actualizamos
                 datosElementos.remove(selectedItem);
-                adaptador.notifyDataSetChanged();
 
+                cargarElementos();
                 break;
 
         }
