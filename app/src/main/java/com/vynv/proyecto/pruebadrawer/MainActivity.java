@@ -1,5 +1,6 @@
 package com.vynv.proyecto.pruebadrawer;
 
+import android.app.Fragment;
 import android.os.Bundle;
 
 import android.support.v4.view.GravityCompat;
@@ -455,5 +456,35 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+    //drawer layout
+
+    /**
+     * Fragment that appears in the "content_frame", shows a planet
+     */
+  /*  public static class FragmentElementos extends Fragment {
+        public static final String ARG_NUMERO_OPCIONESDRAWER = "planet_number";
+
+
+        public FragmentElementos() {
+            // Empty constructor required for fragment subclasses
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_libros, container, false);
+            int i = getArguments().getInt(ARG_NUMERO_OPCIONESDRAWER);
+
+
+            String opciondrawer = getResources().getStringArray(R.array.opciones_array)[i];
+
+            int imageId = getResources().getIdentifier(opciondrawer.toLowerCase(Locale.getDefault()),
+                    "drawable", getActivity().getPackageName());
+            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            getActivity().setTitle(opciondrawer);
+            return rootView;
+        }
+    }*/
 
 }
