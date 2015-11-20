@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 
@@ -34,7 +36,12 @@ public class Visualizar extends Activity {
         TextView lblAutor = (TextView)findViewById(R.id.lblAutor);
         TextView lblFecha = (TextView)findViewById(R.id.lblFecha);
         TextView lblDescripcion = (TextView)findViewById(R.id.lblDescripcion);
-
+        TextView lblDuracion = (TextView)findViewById(R.id.lblDuracion);
+        CheckBox checkvisto = (CheckBox)findViewById(R.id.checkvisto);
+        CheckBox checkfav = (CheckBox)findViewById(R.id.checkfav);
+        TextView lblTipo = (TextView)findViewById(R.id.lblTipo);
+        TextView lblDemografia = (TextView)findViewById(R.id.lblDemografia);
+        TextView lblGenero = (TextView)findViewById(R.id.lblGenero);
 
 
 
@@ -47,7 +54,12 @@ public class Visualizar extends Activity {
         }
         String fecha = intent.getStringExtra("fecha");
         String descripcion = intent.getStringExtra("descripcion");
-
+        String duracion = intent.getStringExtra("duracion");
+        Integer visto = intent.getExtras().getInt("visto");
+        Integer favorito = intent.getExtras().getInt("favorito");
+        String tipoelemento = intent.getStringExtra("tipo");
+        String demografia = intent.getStringExtra("demografia");
+        String genero = intent.getStringExtra("genero");
 
         //mostramos los datos recogidos
         lblTitulo.setText(titulo);
@@ -56,7 +68,17 @@ public class Visualizar extends Activity {
         img.setImageBitmap(image);
         lblFecha.setText(fecha);
         lblDescripcion.setText(descripcion);
+        lblDuracion.setText(duracion);
 
+        if(visto==1){checkvisto.setEnabled(true);}
+        else{checkvisto.setEnabled(false);}
+
+        if(favorito==1){checkfav.setEnabled(true);}
+        else{checkfav.setEnabled(false);}
+
+        lblTipo.setText(tipoelemento);
+        lblDemografia.setText(demografia);
+        lblGenero.setText(genero);
 
 
     }

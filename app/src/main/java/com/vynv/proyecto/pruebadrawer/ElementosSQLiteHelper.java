@@ -7,6 +7,7 @@ package com.vynv.proyecto.pruebadrawer;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -22,7 +23,7 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
     String dbName = "BDElementos";
 
     //Sentencia SQL para crear la tabla de +"dbName+"
-    String sqlCreate = "CREATE TABLE "+dbName+" (codigo INT PRIMARY KEY, titulo varchar2(50), autor varchar2 (50), imagen varchar2(250), fecha  varchar2 (50), descripcion  varchar2 (250));";
+    String sqlCreate = "CREATE TABLE "+dbName+" (codigo INT PRIMARY KEY, titulo varchar2(50), autor varchar2 (50), imagen varchar2(250), fecha  varchar2 (50), descripcion  varchar2 (250), duracion  varchar2 (50), visto int, favorito int, tipo  varchar2 (50), demografia  varchar2 (50), genero  varchar2 (50) );";
     String sqlDrop = "DROP TABLE IF EXISTS "+dbName+"";
 
     public ElementosSQLiteHelper(Context contexto, String nombre,
@@ -81,7 +82,7 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
             if (c.moveToFirst()) {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
-                    cargaelementossqlite.add(new Elemento(/*c.getString(0),*/c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
+                     cargaelementossqlite.add(new Elemento(/*c.getString(0),*/c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getInt(7), c.getInt(8), c.getString(9), c.getString(10), c.getString(11)));
                 } while(c.moveToNext());
             }
         }
@@ -92,23 +93,36 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
     public ArrayList<Elemento> saveSincronizado(ArrayList<Elemento> al) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Elemento> cargaelementossqlite = new ArrayList();
+
+        int Vistodb = 0;
+        int Favoritodb = 0;
+
         if (db != null) {
 
             //db.execSQL(sqlDrop);
             //db.execSQL(sqlCreate);
             int existe=0;
+            long codigo = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + dbName + ";", null);
 
 
             for (int i = 0; i < al.size(); i++) { //recorremos todos los datos para guardarlos
                 //cogemos los datos que esten en esa posicion del listview
                 Elemento ele = al.get(i);
 
-                int iddb = i;
+                int iddb = (int)codigo+1;
                 String Titulodb = ele.getTitulo();
                 String Autordb = ele.getAutor();
                 String Imagendb = ele.getRutaimagen();
                 String Fechadb = ele.getFecha();
                 String Descripciondb = ele.getDescripcion();
+                String Duraciondb = ele.getDuracion();
+               if( ele.getVisto()!=null){ Vistodb = ele.getVisto();}
+                if( ele.getFavorito()!=null){ Favoritodb = ele.getFavorito();}
+                String TipoElementodb = ele.getTipo();
+                String Demografiadb = ele.getDemografia();
+                String Generodb = ele.getGenero();
+
+
 
 
                 //comprobamos si el elemento ya existe
@@ -124,28 +138,67 @@ public class ElementosSQLiteHelper extends SQLiteOpenHelper {
                 if(existe>0){ //si ya existe el elemento introducido modificamos el antiguo valor
                     //actualizamos el campo
                     Log.d("guardado", "guardando, existe " + existe + Titulodb);
-                    db.execSQL("UPDATE "+dbName+" set  imagen ='"+Imagendb+"', fecha='"+Fechadb+"', descripcion='"+Descripciondb+"', autor='"+Autordb+"' WHERE titulo='"+Titulodb+"';");
+                    db.execSQL("UPDATE "+dbName+" set autor='"+Autordb+"', imagen ='"+Imagendb+"', fecha='"+Fechadb+"', descripcion='"+Descripciondb+"', duracion='"+Duraciondb+"', visto ='"+Vistodb+"', favorito ='"+Favoritodb+"', tipo='"+TipoElementodb+"', demografia='"+Demografiadb+"', genero='"+Generodb+"' WHERE titulo='"+Titulodb+"';");
                 }
                 else{ //si no existe el elemento lo introducimos
                     //insertamos
-                    Log.d("guardado", "guardando, no existe" + existe + Titulodb);
-
-                    db.execSQL("INSERT INTO "+dbName+" (codigo, titulo, autor, imagen, fecha, descripcion ) values (" + iddb + ", '" + Titulodb + "', '" + Autordb + "', '" + Imagendb + "', '" + Fechadb + "', '" + Descripciondb + "');");
+                    Log.d("guardado", "guardando, no existe" +iddb +  Titulodb + Autordb + Fechadb + Descripciondb + Duraciondb + TipoElementodb + Demografiadb + Generodb);
+                    db.execSQL("INSERT INTO "+dbName+" (codigo, titulo, autor, imagen, fecha, descripcion, duracion, tipo, demografia, genero ) values (" + iddb + ", '" + Titulodb + "', '" + Autordb + "', '" + Imagendb + "', '" + Fechadb + "', '" + Descripciondb + "', '" + Duraciondb + "', '" + TipoElementodb + "', '" + Demografiadb + "', '" + Generodb +"');");
                 }
             }
             //cargamos los datos
             Cursor d = db.rawQuery("SELECT * FROM "+dbName+"", null);
 
-            if (d.moveToFirst()) {
-                //Recorremos el cursor hasta que no haya más registros para cargarlos y devolverlos de vuelta
-                do {
-                    cargaelementossqlite.add(new Elemento(/*c.getString(0),*/d.getString(1), d.getString(2), d.getString(3), d.getString(4), d.getString(5)));
-                } while(d.moveToNext());
-            }
+
         }
         db.close();
         return cargaelementossqlite;
     }
+
+
+    public int[] saveestado(ArrayList<Elemento> al) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Elemento> cargaelementossqlite = new ArrayList();
+        int Vistodb = 0;
+        int Favoritodb = 0;
+        if (db != null) {
+
+            //db.execSQL(sqlDrop);
+            //db.execSQL(sqlCreate);
+            int existe=0;
+
+            for (int i = 0; i < al.size(); i++) { //recorremos todos los datos para guardarlos
+                //cogemos los datos que esten en esa posicion del listview
+                Elemento ele = al.get(i);
+
+                int iddb = i;
+                String Titulodb = ele.getTitulo();
+                 Vistodb = ele.getVisto();
+                 Favoritodb = ele.getFavorito();
+
+
+                //comprobamos si el elemento ya existe
+
+                Cursor c = db.rawQuery("SELECT COUNT(*) FROM " + dbName + " WHERE titulo='" + Titulodb+"';", null);
+
+                if (c.moveToFirst()) {//Recorremos el cursor hasta que no haya más registros
+                    do {
+                        existe= c.getInt(0);
+                    } while(c.moveToNext());
+                }
+
+                if(existe>0){ //si ya existe el elemento introducido modificamos el antiguo valor
+                    //actualizamos el campo
+                    Log.d("guardado", "guardando, existe " + existe + Titulodb);
+                    db.execSQL("UPDATE "+dbName+" set visto ='"+Vistodb+"', favorito ='"+Favoritodb+"' WHERE titulo='"+Titulodb+"';");
+                }
+            }
+        }
+        db.close();
+
+        return new int[] {Vistodb, Favoritodb};
+    }
+
 
     public void delete(String titulodb){
         SQLiteDatabase db = this.getWritableDatabase();

@@ -70,6 +70,15 @@ public class MainActivity extends AppCompatActivity
     String imagen="";
     String fecha="";
     String descripcion="";
+    String duracion="";
+    Integer visto=0;
+    Integer favorito=0;
+    String tipoelemento="";
+    String demografia="";
+    String genero="";
+
+
+
 
     String nfichero="recibelibros.xml";
 
@@ -241,7 +250,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == 1) {
+        if (resultCode == RESULT_OK && requestCode == 1) {//visualizar
             if (data.hasExtra("titulo")) {
                 titulo = data.getExtras().getString("titulo");
             }
@@ -257,14 +266,30 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("descripcion")) {
                 descripcion = data.getExtras().getString("descripcion");
             }
+            if (data.hasExtra("duracion")) {
+                duracion = data.getExtras().getString("duracion");
+            }
+            if (data.hasExtra("tipo")) {
+                tipoelemento = data.getExtras().getString("tipo");
+            }
+            if (data.hasExtra("demografia")) {
+                demografia = data.getExtras().getString("demografia");
+            }
+            if (data.hasExtra("genero")) {
+                genero = data.getExtras().getString("genero");
+            }
 
 
             Log.d("tag", titulo);
-            datosElementos.add(new Elemento(titulo, autor, imagen, fecha, descripcion));
+            if(fecha==null){//ojo//
+                datosElementos.add(new Elemento(titulo, autor));
+            }
+            Log.d("intercambio", "pilla insertar" + titulo + autor + fecha + descripcion + duracion +visto+ favorito+ tipoelemento + demografia + genero);
+            datosElementos.add(new Elemento(titulo, autor, imagen, fecha, descripcion, duracion, tipoelemento, demografia, genero));
             guardarElementosSincronizado();
             adaptador.notifyDataSetChanged();
 
-        }
+        }//editar
         if (resultCode == RESULT_OK && requestCode == 3) {
             if (data.hasExtra("titulo")) {
                 titulo = data.getExtras().getString("titulo");
@@ -281,8 +306,24 @@ public class MainActivity extends AppCompatActivity
             if (data.hasExtra("descripcion")) {
                 descripcion = data.getExtras().getString("descripcion");
             }
+            if (data.hasExtra("duracion")) {
+                duracion = data.getExtras().getString("duracion");
+            }
+            if (data.hasExtra("tipo")) {
+                tipoelemento = data.getExtras().getString("tipo");
+            }
+            if (data.hasExtra("demografia")) {
+                demografia = data.getExtras().getString("demografia");
+            }
+            if (data.hasExtra("genero")) {
+                genero = data.getExtras().getString("genero");
+            }
 
-            datosElementos.set(selectedItem, new Elemento(titulo, autor, imagen, fecha, descripcion));
+            if(fecha==null){//ojo//
+                datosElementos.add(new Elemento(titulo, autor));
+            }
+            Log.d("intercambio", "pilla editar" + titulo + autor + fecha + descripcion + duracion +visto+ favorito+ tipoelemento + demografia + genero);
+            datosElementos.add(new Elemento(titulo, autor, imagen, fecha, descripcion, duracion, tipoelemento, demografia, genero));
 
             adaptador.notifyDataSetChanged();
             guardarElementosSincronizado();
@@ -364,16 +405,27 @@ public class MainActivity extends AppCompatActivity
                 imagen =(datosElementos.get(info.position).getRutaimagen());
                 fecha =(datosElementos.get(info.position).getFecha());
                 descripcion =(datosElementos.get(info.position).getDescripcion());
-
+                duracion =(datosElementos.get(info.position).getDuracion());
+                visto =(datosElementos.get(info.position).getVisto());
+                favorito =(datosElementos.get(info.position).getFavorito());
+                tipoelemento =(datosElementos.get(info.position).getTipo());
+                demografia =(datosElementos.get(info.position).getDemografia());
+                genero =(datosElementos.get(info.position).getGenero());
 
                 intentVisualiza.putExtra("titulo",titulo);
                 intentVisualiza.putExtra("autor", autor);
                 intentVisualiza.putExtra("imagen", imagen);
                 intentVisualiza.putExtra("fecha",fecha);
                 intentVisualiza.putExtra("descripcion",descripcion);
+                intentVisualiza.putExtra("duracion",duracion);
+                intentVisualiza.putExtra("visto",visto);
+                intentVisualiza.putExtra("favorito",favorito);
+                intentVisualiza.putExtra("tipo",tipoelemento);
+                intentVisualiza.putExtra("demografia",demografia);
+                intentVisualiza.putExtra("genero",genero);
 
                 startActivity(intentVisualiza);
-                Log.d("intercambio", "pilla insertar" + titulo + autor + fecha + descripcion);
+                Log.d("intercambio", "envia insertar" + titulo + autor + fecha + descripcion + duracion +visto+ favorito+ tipoelemento + demografia + genero);
                 break;
 
             case R.id.mnuEditar:
@@ -384,16 +436,23 @@ public class MainActivity extends AppCompatActivity
                 imagen =(datosElementos.get(info.position).getRutaimagen());
                 fecha =(datosElementos.get(info.position).getFecha());
                 descripcion =(datosElementos.get(info.position).getDescripcion());
-
+                duracion = (datosElementos.get(info.position).getDuracion());
+                tipoelemento = (datosElementos.get(info.position).getTipo());
+                demografia =(datosElementos.get(info.position).getDemografia());
+                genero =(datosElementos.get(info.position).getGenero());
 
                 Log.d("titulo", titulo);
-                intentEdita.putExtra("titulo", titulo);
+                intentEdita.putExtra("titulo",titulo);
                 intentEdita.putExtra("autor", autor);
                 intentEdita.putExtra("imagen", imagen);
                 intentEdita.putExtra("fecha", fecha);
-                intentEdita.putExtra("descripcion", descripcion);
+                intentEdita.putExtra("descripcion",descripcion);
+                intentEdita.putExtra("duracion",duracion);
+                intentEdita.putExtra("tipo",tipoelemento);
+                intentEdita.putExtra("demografia",demografia);
+                intentEdita.putExtra("genero",genero);
 
-                Log.d("intercambio", "pilla editar" + titulo + autor + fecha + descripcion);
+                Log.d("intercambio", "envia editar"  + titulo + autor + fecha + descripcion + duracion + tipoelemento + demografia + genero);
                 startActivityForResult(intentEdita, 3);
                 break;
 

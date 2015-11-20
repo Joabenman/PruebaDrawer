@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +30,11 @@ public class Editar extends Activity implements View.OnClickListener {
     private String selectedImagePath;
     private String rutaoriginal="";
     private ImageView img;
+
+    private String spinTipoData = null;
+    private String spinDemografiaData = null;
+    private String spinGeneroData = null;
+
 
     String imagen="";
     //inicializamos la interfaz
@@ -51,27 +57,37 @@ public class Editar extends Activity implements View.OnClickListener {
         EditText txtAutor = (EditText)findViewById(R.id.txtAutor);
         EditText txtfecha = (EditText)findViewById(R.id.txtFecha);
         EditText txtDescripcion = (EditText)findViewById(R.id.txtDescripcion);
-
+        EditText txtDuracion = (EditText)findViewById(R.id.txtDuracion);
 
         img = (ImageView)findViewById(R.id.ImageView01);
 
+
+        //pillamos datos del intent
         Intent intent = getIntent();
+
+
 
         String titulo =  intent.getStringExtra("titulo");
         String autor =  intent.getStringExtra("autor");
         String imagen =  intent.getStringExtra("imagen");
-        rutaoriginal =  intent.getStringExtra("imagen");
+        rutaoriginal =  imagen;
         String fecha =  intent.getStringExtra("fecha");
         String descripcion =  intent.getStringExtra("descripcion");
+        String duracion =  intent.getStringExtra("duracion");
+        spinTipoData =  intent.getStringExtra("tipo");
+        spinDemografiaData =  intent.getStringExtra("demografia");
+        spinGeneroData =  intent.getStringExtra("genero");
 
+        Log.d("intercambio", "arranca editar" + titulo + autor + fecha + descripcion + duracion +spinTipoData +spinDemografiaData +spinGeneroData);
 
+        //guardamos los datos recogidos del intent
         txtTitulo.setText(titulo);
         txtAutor.setText(autor);
         Bitmap image = BitmapFactory.decodeFile(imagen);
         img.setImageBitmap(image);
         txtfecha.setText(fecha);
         txtDescripcion.setText(descripcion);
-
+        txtDuracion.setText(duracion);
 
 
         // img = (ImageView)findViewById(R.id.ImageView01);
@@ -86,6 +102,59 @@ public class Editar extends Activity implements View.OnClickListener {
                         startActivityForResult(Intent.createChooser(intent, "Select Picture2"), SELECT_PICTURE);
                     }
                 });
+
+    }
+
+
+
+
+    public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            String selectedItem = parent.getItemAtPosition(pos).toString();
+
+            //check which spinner triggered the listener
+            switch (parent.getId()) {
+
+                //spinner de tipo
+                case R.id.spinTipo:
+                    //make sure the country was already selected during the onCreate
+                    if(spinTipoData != null){
+                        Toast.makeText(parent.getContext(), "Tipo seleccionado:  " + selectedItem,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    spinTipoData = selectedItem;
+                    break;
+
+                //spinner de demografia
+                case R.id.spinDemografia:
+                    //make sure the animal was already selected during the onCreate
+                    if(spinDemografiaData != null){
+                        Toast.makeText(parent.getContext(), "Demografia seleccionada: " + selectedItem,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    spinDemografiaData = selectedItem;
+                    break;
+
+                //spinner de genero
+                case R.id.spinGenero:
+                    //make sure the animal was already selected during the onCreate
+                    if(spinGeneroData != null){
+                        Toast.makeText(parent.getContext(), "Genero seleccionado:" + selectedItem,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    spinGeneroData = selectedItem;
+                    break;
+            }
+
+            Log.d("intercambio", "fin spinner");
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do nothing.
+        }
+
     }
 
     @Override
@@ -139,11 +208,12 @@ public class Editar extends Activity implements View.OnClickListener {
         ImageView ImageView01 = (ImageView)findViewById(R.id.ImageView01);
         EditText txtFecha = (EditText)findViewById(R.id.txtFecha);
         EditText txtDescripcion = (EditText)findViewById(R.id.txtDescripcion);
-
+        EditText txtDuracion = (EditText)findViewById(R.id.txtDuracion);
 
         boolean hayError = false;
 
         String titulo2 = txtTitulo.getText().toString(); //recogemos txttitulo
+        String autor2 = txtAutor.getText().toString(); //recogemos txtautor
         String rutaimagen="";
         if(hayimagen==true) { //comprobamos si hay una imagen seleccionada
             rutaimagen = selectedImagePath;
@@ -152,7 +222,9 @@ public class Editar extends Activity implements View.OnClickListener {
         }
         String fecha2 = txtFecha.getText().toString(); //recogemos txteditorial
         String descripcion2 = txtDescripcion.getText().toString(); //recogemos txteditorial
-        String autor2 = txtAutor.getText().toString(); //recogemos txtautor
+        String duracion2 = txtDuracion.getText().toString();//recogemos duracion
+
+
 
 
 
@@ -176,21 +248,43 @@ public class Editar extends Activity implements View.OnClickListener {
             mostrarMensaje("El nombre de la descripcion no es válido.");
             hayError = true;
         }
+        if ((duracion2.length() < 1 || duracion2.length() > 50) && hayError == false) {
+            mostrarMensaje("El nombre de la descripcion no es válido.");
+            hayError = true;
+        }
 
+
+        if(spinTipoData==null){
+            String[] Stipoelemento = getResources().getStringArray(R.array.spinner_tipo);
+            spinTipoData= Stipoelemento[0];
+        }
+
+        if(spinDemografiaData==null){
+            String[] Sdemografia = getResources().getStringArray(R.array.spinner_demografia);
+            spinDemografiaData= Sdemografia[0];
+        }
+
+        if(spinGeneroData==null){
+            String[] Sgenero = getResources().getStringArray(R.array.spinner_genero);
+            spinGeneroData= Sgenero[0];
+        }
 
 
         //si no hay ningun error ingresamos los nuevos datos de disco
         if (hayError == false) {
-            Log.d("intercambio", "devuelve editar" + titulo2 + autor2 + fecha2 + descripcion2);
-            Intent i=new Intent(this,MainActivity.class);
+            Log.d("intercambio", "devuelve editar" + titulo2 + autor2 + fecha2 + descripcion2 + duracion2 +spinTipoData +spinDemografiaData +spinGeneroData);
+            Intent i = new Intent(this,MainActivity.class);
             i.putExtra("titulo",titulo2);
             i.putExtra("autor",autor2);
             i.putExtra("imagen", rutaimagen);
             i.putExtra("fecha",fecha2);
             i.putExtra("descripcion",descripcion2);
+            i.putExtra("duracion",duracion2);
+            i.putExtra("tipo",spinTipoData);
+            i.putExtra("demografia",spinDemografiaData);
+            i.putExtra("genero",spinGeneroData);
 
             setResult(RESULT_OK, i);
-
         }
 
         finish();

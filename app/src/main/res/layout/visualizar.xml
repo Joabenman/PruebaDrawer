@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="false">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
     <LinearLayout
         android:orientation="horizontal"
@@ -27,14 +31,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="349dp">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="190dp"
-            android:layout_height="429dp"
+            android:layout_height="333dp"
             android:weightSum="1"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,8 +46,9 @@
                 android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold"
                 android:text="Título"
-                android:id="@+id/lbl1"
-                android:layout_marginLeft="20dp" />
+                android:id="@+id/textView6"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,6 +58,7 @@
                 android:id="@+id/lblTitulo"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_weight="0.08" />
 
             <TextView
@@ -61,8 +67,9 @@
                 android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold"
                 android:text="Autor"
-                android:id="@+id/lbl3"
-                android:layout_marginLeft="20dp" />
+                android:id="@+id/textView8"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,6 +79,7 @@
                 android:id="@+id/lblAutor"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_weight="0.08" />
 
             <TextView
@@ -80,8 +88,9 @@
                 android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold"
                 android:text="Fecha"
-                android:id="@+id/lbl2"
-                android:layout_marginLeft="20dp" />
+                android:id="@+id/textView10"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -91,16 +100,18 @@
                 android:id="@+id/lblFecha"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_weight="0.08" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold"
                 android:text="Descripcion"
-                android:id="@+id/textView3"
-                android:layout_marginLeft="20dp" />
+                android:id="@+id/textView12"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,28 +121,51 @@
                 android:id="@+id/lblDescripcion"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_weight="0.08" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Duracion"
+                android:id="@+id/textView14"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:text="..."
+                android:id="@+id/lblDuracion"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_weight="0.08" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="1">
+            android:layout_height="326dp"
+            android:weightSum="1" >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold"
-                android:text="Portada:"
-                android:id="@+id/lbl4" />
+                android:text="Imagen:"
+                android:id="@+id/textView16"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="176dp"
+                android:layout_weight="0.02" >
 
                 <ImageView
                     android:layout_width="141dp"
@@ -145,13 +179,113 @@
                     android:scaleType="fitXY" />
             </LinearLayout>
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visto?"
+                android:id="@+id/checkvisto"
+                android:layout_gravity="left|center_horizontal"
+                android:checked="false"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:clickable="false"
+                android:enabled="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorito?"
+                android:id="@+id/checkfav"
+                android:layout_gravity="left|center_horizontal|right"
+                android:checked="false"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:enabled="false" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Tipo"
+                android:id="@+id/textView3"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:text="..."
+                android:id="@+id/lblTipo"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Demografía"
+                android:id="@+id/textView17"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:text="..."
+                android:id="@+id/lblDemografia"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Género"
+                android:id="@+id/textView19"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:text="..."
+                android:id="@+id/lblGenero"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_weight="0.08" />
+
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

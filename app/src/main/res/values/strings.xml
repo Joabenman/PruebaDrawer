@@ -16,6 +16,30 @@
         <item>importar</item>
         <item>exportar</item>
     </string-array>
+
+    <string-array name="spinner_tipo">
+        <item>Libro</item>
+        <item>Pelicula</item>
+        <item>Serie</item>
+    </string-array>
+
+    <string-array name="spinner_demografia">
+        <item>Adultos</item>
+        <item>Juvenil</item>
+        <item>Infantil</item>
+    </string-array>
+
+    <string-array name="spinner_genero">
+        <item>Aventura</item>
+        <item>Terror</item>
+        <item>Erótico</item>
+        <item>Acción</item>
+        <item>Animación</item>
+        <item>Documental</item>
+        <item>Humor</item>
+        <item>Western</item>
+    </string-array>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
